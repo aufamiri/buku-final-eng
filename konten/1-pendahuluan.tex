@@ -1,12 +1,20 @@
 % Ubah judul dan label berikut sesuai dengan yang diinginkan.
-\section{Pendahuluan}
-\label{sec:pendahuluan}
+\section{Introduction}
+\label{sec:Introduction}
 
 % Ubah paragraf-paragraf pada bagian ini sesuai dengan yang diinginkan.
+News is a report or a factual story, designed to be the fastest, has a good way of describing problems, and is just by nature to all problem in which it is choose to be published \cite{rani2013persepsi}. News also has a very important role in the public, not only because it is a good way to attain a new information, but also to broaden one knowledge.
 
-Pesatnya perkembangan roket yang merupakan \lipsum[2-4]
+Hoax or fake news is a way or method to try to deceive people so they believed something that is can't be considered correct and those incorrect things is more often than not is something only a mad-man would believe \cite{berita_bohong}. Not only reading a fake news will cost you your knowledge, hoax can have many other effects, ranging from the loss of reputation, money, up to even death threat.
 
-Pembahasan pada paper ini dimulai dengan presentasi mengenai penelitian lain (Bagian \ref{sec:penelitianterkait}).
-Kemudian dilanjutkan dengan penjelasan mengenai arsitektur dari sistem yang dibuat (Bagian \ref{sec:arsitektur}).
-Berdasarkan hal tersebut, kami menunjukkan lorem ipsum (Bagian \ref{sec:loremipsum}).
-Terakhir, didapatkan kesimpulan dari penelitian yang telah dilakukan (Bagian \ref{sec:kesimpulan}).
+Based on the data that we got from the Ministry of Communication and Informatics, there are a total of 5156 hoaxes that have been found only from a short range of August 2018 to March 2020. From January 2020 to March 2020, there are as many as 959 fake news that have been found \cite{kominfoStatHoax}. Still based on the very same source, at Juny 2020, there are dozens of new hoaxes have been discovered every single day \cite{kominfoJuni2020}.
+
+Nowadays, there are high chance everyone has a few social media account rather than those that are not. This in turn, has quite an effect on the spreading of the fake news, with those hoaxes spreading far and wide with speed never seen before. Based on the survey conducted by Khan and Idris, there are more than half of Indonesian people has a high tendency to share news links without feeling the need to do any validation of said news beforehand \cite{khan}. Another survey with similar topic conducted by Kunto with 480 respondence at East Java, shows that around 30\% of the total of the responder has a tendency to share a fake news from mild to severe \cite{kuntoUmur}. From those studies, it is safe to assume that Indonesian people in general, has a high tendency to share fake news through their social media accounts.
+
+Neural networks is one of the many branches of machine learning study in which it is applying neurons, just like those that is usually found in human brain structure. Those neurons is used by neural network to process data which in turn resulting in an output. One of the newest things in neural network branch is a method called Bi-Directional Encoder Representations from Transformers or BERT in short. BERT is a method to get a context from a raw text in which it is inputted.
+
+There are many previous works on this automatic hoax detection topic that have been done by other researchers in the past. Aggarway et al. has done an extensive research to see the difference between BERT, XGBoost and LSTM to classify fake news from english sources. Based on that research, turn out BERT has quite an edge to detect hoaxes compared to the other two method \cite{bert_news_classi}. Another researcher under the name Bahad et al. has done another research to see which one is better between CNN, RNN, uni-directional LSTM RNN and bi-directional LSTM RNN when used also to classifying fake news. The result shows that LSTM coupled with attention-span, whether it is a uni-directional or bi-directional one, has quite a high accuracy compared to the other method like CNN or RNN \cite{bahad_lstm}. From either of those two researchs, it can be concluded that if an algorithm is able to "remember" or know the context of the text, it will most likely has a higher accuracy if compared to the other non-"remember" approach.
+
+But, if we are talking about Indonesia news detection state nowadays, there are not that many researcher has been doing that topic. There has been a research, done by Prasetijo et al. , that try to use SVM and SGD to detect Indonesian hoax news and resulting in a model with the accuracy of 85\% \cite{prasetijo}. Another research by Rahutomo et al. on the same topic but using naive bayes as the method, has been succesfully attain 80\% accuracy on the same task \cite{rahutomo}.
+
+The purpose of this research is to develop a model to automatically detect Indonesian hoax news by using BERT. The reason being is that by using BERT, hopefully, there will be an increase in efficiency and accuracy of Indonesian hoax news detection.
