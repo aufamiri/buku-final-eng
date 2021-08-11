@@ -1,0 +1,47 @@
+% Ubah judul dan label berikut sesuai dengan yang diinginkan.
+\section{Experiment}
+\label{sec:experiment}
+
+% Ubah paragraf-paragraf pada bagian ini sesuai dengan yang diinginkan.
+Containing in this section we will explaining the result of our test along with the analysis that we have been in accordance with the system design written at the previous section. Dataset that is being used is a combination of dataset that is originated from \url{data.mendeley.com} and dataset of our own creation by leveraging web crawling technology. There are a few experiment that we have run in this research with details summarize as below :
+
+\begin{enumerate}[nolistsep]
+  \item Performance experiment based on the text truncating method
+  \item Performance experiment based on the BERT model that is being used
+  \item Performance experiment based on the transformer method being used
+  \item Performance experiment based on the training approach
+\end{enumerate}
+
+In each of these experiment, all of the models is ran on Google Collab with hardware specification enlisted in table \ref{tab:specs_collab}
+
+\begin{table}[h]
+  \caption{PC specification that we use}
+  \label{tab:specs_collab}
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Processor}            & 2 v-core Intel(R) Xeon(R) CPU @ 2.20GHz   \\ \hline
+    \textbf{RAM}                  & Virtual Memory : 12GB                     \\ \hline
+    \textit{\textbf{Storage}}     & SSD : 69GB                                \\ \hline
+    \multirow{2}{*}{\textbf{GPU}} & Nvidia Tesla T4 16GB                      \\ \cline{2-2}
+                                  & Nvidia K80 12GB                           \\ \hline
+    \textbf{Operating System}     & Ubuntu 18.04.5 LTS (Bionic Beaver) 64-bit \\ \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Performance experiment based on the text truncating method}
+
+Because of BERT at the current state is only able to process up to 512 token at once, and because there are a few different styles in writing a news text, we need to test on which way is best to truncate a long text into a maximum of 512 token.
+
+There are a few alternatives that we can choose on how to truncate the text. We can truncate the first 512 token and delete the rest of the text, we can also get the last 512 token, or we can also combining both text from the first part of the text and from the end part of the text according to some ratio. All of those will be tested with details written below :
+
+\begin{enumerate}
+  \item Truncate the first part of the text
+
+        There are a few distinctive feature that can be easily found in most of Indonesian news content. One of the most prominent however, is writing a summary of the presented news on the first few paragraph. Oftenly, this will help people who want to skim the news rather than read it thoroughly and there are many such styles in Indonesian news site, even more so if said sites is using some form of pages when displaying the content of the news. Because of that, on this type of news, it is easier to determine whether it is a hoax or not by reading only the first paragraph.
+
+  \item Truncate the last part of the text
+
+        In truth, this is quite similar
+
+\end{enumerate}
