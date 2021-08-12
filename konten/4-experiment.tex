@@ -22,7 +22,7 @@ In each of these experiment, all of the models is ran on Google Collab with hard
     \hline
     \textbf{Processor}            & 2 v-core Intel(R) Xeon(R) CPU @ 2.20GHz   \\ \hline
     \textbf{RAM}                  & Virtual Memory : 12GB                     \\ \hline
-    \textit{\textbf{Storage}}     & SSD : 69GB                                \\ \hline
+    \textbf{Storage}              & SSD : 69GB                                \\ \hline
     \multirow{2}{*}{\textbf{GPU}} & Nvidia Tesla T4 16GB                      \\ \cline{2-2}
                                   & Nvidia K80 12GB                           \\ \hline
     \textbf{Operating System}     & Ubuntu 18.04.5 LTS (Bionic Beaver) 64-bit \\ \hline
@@ -42,6 +42,103 @@ There are a few alternatives that we can choose on how to truncate the text. We 
 
   \item Truncate the last part of the text
 
-        In truth, this is quite similar
+        Another characteristics of Indonesian news writing style is placing the conclusion at the end of the text. This style can often be found when the news is having an in-depth review of a particular problem and the conclusion is placed at the end instead of the front to help readers understand how and what is the relationship of all the previously described information in the news.
+
+  \item Combining both parts of the text by taking 129 token from the first part, and 383 token from the last part
+
+        This experiment is based on previous work by Chi Sun et al. which stated that the best truncating strategy on long text for BERT method is by combining both text with the said ratio. This strategy has succesfully attain a higher accuracy compared to other truncating strategy like if we only truncate the first part of the text or doing it only with the last part \cite{sun2019fine}. The reason as to why this is happening is because when we combine both parts, we should get both the preamble of the news and the conclusion part of the news in which then is being inputted into BERT's training phase. But, this research is done in an english long text so there is still the need to see if the same thing hold true for Indonesian long text.
 
 \end{enumerate}
+
+From a total of 1621 data, we split the 18\% of it and we set it as a test dataset resulting in the total of 292 dataset only for test phase. We configured all of the training parameters for this experiment to be the same accross test, which is 7 for the epoch, learning-rate is set at 2e-5, and epsilon at 1e-8. We also using the same model accross all test, an indonesian BERT model that has been created by Indobert. For more information regarding the parameters, kindly look into table \ref{tab: truncate_param}
+
+\begin{table}[h]
+  \caption{Parameter Configuration for Truncation Strategy based Test}
+  \label{tab: truncate_param}
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{epoch}          & 3                              \\ \hline
+    \textbf{learning rates} & 2e-5                           \\ \hline
+    \textbf{epsilon}        & 1e-4                           \\ \hline
+    \textbf{model}          & indobenchmark/indobert-base-p1 \\ \hline
+  \end{tabular}
+\end{table}
+
+The result of this model will be compared to the label that we got from the dataset in which then will be counted to get its confusion matrix, recall, precision, accuracy and f1-score values according to the appropriate formulas.
+
+\begin{table}[h]
+  \centering
+  \caption{Performance for Truncation Strategy based Test}
+  \label{tab: truncate_result}
+  \begin{tabular}{|p{.12\textwidth}|l|l|l|l|}
+    \hline
+    \textbf{Truncate Location}               & \textbf{recall} & \textbf{precision} & \textbf{f1-score} & \textbf{accuracy} \\ \hline
+    first part                               & \textbf{89\%}   & \textbf{90\%}      & \textbf{89\%}     & \textbf{89\%}     \\ \hline
+    last part                                & 88\%            & 85\%               & 86\%              & 86\%              \\ \hline
+    combine (129 first part + 383 last part) & 88\%            & 88\%               & 88\%              & 87\%              \\ \hline
+  \end{tabular}
+\end{table}
+
+As we can see from table \ref{tab: truncate_result}, truncating only the first part of the text has obtained the highest accuracy compared to other truncation strategy. On top of that, it also has a balance recall and precision values, indicating that the model is quite good on detecting both the valid news and the hoax news. Truncating only the last part of the text, however, showing high probability of biasing towards detecting all text into hoax news. In another note, The combination of both strategy has a good balance of its precision and recall values, it just not having high enough values if compared to the first strategy.
+
+\subsection{Performance experiment based on the BERT model that is being used}
+
+There are lots of BERT models that have been created by many people on the internet. Unfortunately, most of those models is only supporting a specific language. Of course, While there are some that is able to do multilingual tasks, the number is not that great and only a few in between. More often than not, this is because creating a multilingual model require not only massive amount of pre-training time and data, but also the resources it will take even after the model has already finished pre-training and is deployed. Not to mention that the benefit of having a multilingual model is not that great because having only support a specific language will result in a model with a higher accuracy in that language compared to the one with multilingual support. That is why the aim of this experiment is to see which BERT models with different pre-trained data sizes and sources is best for our specific tasks. Below are the details of the models that we used in this subsection.
+
+\begin{enumerate}
+  \item bert-base-bahasa-standard-case \textit{(bert-bahasa)}
+
+        It is a BERT model created by huzeinzol05. By design, this model supposedly only support Malay language, but the creator claimed that this model should be able to do just fine on Indonesian language tasks, thanks to the closeness of both the Malay language and the Indonesian language in which sometime have the same meaning on a few words and structures. This model is trained on quite a lots of data originating from the Malay version of Wikipedia, Wattpad, and also social media \cite{Malaya}.
+
+  \item bert-base-multilingual-uncaseda \textit{(bert-base)}
+
+        This is a base BERT model that is also being used in the BERT's original paper created by Devlin et al. in which it is first introduced into the world. Created by the team at Google, this model is pre-trained by using all of the languages that Wikipedia have. Resulting in a model that is able to do tasks from all 104 languages at once \cite{devlin2019bert}.
+
+  \item indobert-base-p1 \textit{(indobert)}
+
+        This BERT model is one of the BERT model that is created specifically for the Indonesian language. This model is the product of Indobenchmark team as a part of benchmarking test for Indonesian language Natural Language Understanding (NLU). Compared to other BERT models, this model has the largest pretained dataset. It is originated from many sources such as Indonesian version of Wikipedia, Twitter, OpenSubtitle. All of those combined, resultinig in 23 GB worth of dataset used only for its pre-training phase.
+
+  \item bert-base-indonesian-522M \textit{(cahya-522M)}
+
+        An Indonesian-only BERT model that is the creation of Cahya Wirawan. Pretrained on the lowest dataset size if compared to other models used in this experiment that is of only 522M data. All of which is from the Indonesian version of Wikipedia.
+
+  \item bert-base-indonesian-1.5G \textit{(cahya-1.5G)}
+
+        This has model has the same creature as the previous model. The only difference there, is that this model has an additional 1GB of data taken from many Indonesian news sites. The resulting size of the dataset used for pretraining is 1.5G of data.
+
+\end{enumerate}
+
+\begin{table}[h]
+  \centering
+  \caption{the configuration of the BERT models}
+  \label{tab:multi_bert_config}
+  \begin{tabular}{|p{.5\linewidth}|c|l|p{.12\linewidth} |}
+    \hline
+    Model                          & epoch & dropout & learning rates \\ \hline
+    bert-base-bahasa-standard-case & 4     & 0.2     & 2e-5           \\ \hline
+    bert-base-multilingual-uncased & 4     & 0.2     & 2e-5           \\ \hline
+    indobert-base-p1               & 3     & 0.1     & 2e-5           \\ \hline
+    bert-base-indonesian-522M      & 3     & 0.1     & 2e-5           \\ \hline
+    bert-base-indonesian-1.5G      & 3     & 0.2     & 2e-5           \\ \hline
+  \end{tabular}
+\end{table}
+
+Before we start the training process, we need to configure the parameters of the BERT models. Table \ref{tab:multi_bert_config} is the details of the configuration that is being used in this experiment. There are a couple differences in the configuration like for example the epoch and the dropout values. This is mainly because using the same parameter for all models is considered to be not feasible as there are cases of overfitting or underfitting in some models.
+
+\begin{table}[h]
+  \centering
+  \caption{The resulting performance of all the BERT models}
+  \label{tab:model_bert_result}
+  \begin{tabular}{|l|l|l|l|l|p{.12\linewidth}|}
+    \hline
+    \textbf{model} & \textbf{recall} & \textbf{precision} & \textbf{f1-score} & \textbf{accuracy} & \textbf{avg. training time} \\ \hline
+    bert-bahasa    & 89\%            & 82\%               & 85\%              & 85\%              & 03:43                       \\ \hline
+    bert-base      & \textbf{97\%}   & 75\%               & 85\%              & 86\%              & 02:07                       \\ \hline
+    indobert       & 89\%            & \textbf{90\%}      & \textbf{89\%}     & \textbf{89\%}     & 02:05                       \\ \hline
+    cahya-522M     & 88\%            & 80\%               & 84\%              & 84\%              & \textbf{02:03}              \\ \hline
+    cahya-1.5G     & 93\%            & 80\%               & 86\%              & 87\%              & 02:08                       \\ \hline
+  \end{tabular}
+\end{table}
+
+Table \ref{tab:model_bert_result} can be summarized with if there are a model that utilized small dataset in its pre-training phase, it will take smaller time at the fine-tuning process, but, this is also sacrificing on the accuracy as it is has lower accuracy compared to other models. Another thing is that the Malay version of the BERT model is not a good match for Indonesian hoax news detection. BERT model created from Indobenchmark has the best accuracy coupled with balanced precision and recall values so it is safe to say that the Indobert model is more reliable when used as a hoax news detection model.
