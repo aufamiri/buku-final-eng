@@ -142,3 +142,119 @@ Before we start the training process, we need to configure the parameters of the
 \end{table}
 
 Table \ref{tab:model_bert_result} can be summarized with if there is a model that utilized small dataset in its pre-training phase, it will take smaller time at the fine-tuning process, but, this is also sacrificing on the accuracy as it is has lower accuracy compared to other models. Another thing is that the Malay version of the BERT model is not a good match for Indonesian hoax news detection. BERT model created from Indobenchmark has the best accuracy coupled with balanced precision and recall values so it is safe to say that the Indobert model is more reliable when used as a hoax news detection model.
+
+\subsection{Performance experiment based on the transformer method being used}
+
+BERT is a state-of-the-art method in Natural Language Processing (NLP) tasks and is a further development of the Transformer method. Meanwhile, aside from BERT there are other models that is based on the same Transformer method with their own advantages and disadvantages. That is why in this experiment, we try to see whether BERT is the best method when is being used as an Indonesian hoax news detection. As a control, we use models that has the same creator - that is Cahya Wirawan - and all of those models is using the same dataset size for its pretraining phase that is 522M. Below are the details of the transformer models that we use in this experiment :
+
+\begin{enumerate}
+  \item ROBERTA
+
+        This method is the better-and-newer version of BERT. According to its inital journal, ROBERTA is trained using dynamic masking method, compared to the static masking method found in BERT. On top of that, the original ROBERTA is trained on a larger dataset compared to BERT and while this add the time required to do the pre-training phase, but also resulting in a more robust model in general \cite{roberta}.
+
+  \item GPT-2
+
+        One of the most famous model thanks to its ability to do automatic text continuation or generation while still retaining the context accross sentences and is understandable by humans. The main difference between BERT and GPT-2 is the configuration of its attention head. If we are looking BERT, its attention head is designed to looks both backward and forward to calculate the word bias. Meanwhile, GPT-2 only see the subsequent words.
+
+  \item BERT
+
+        The BERT model that we used in this experiment is the same model that we used in the previous experiment which in this case, we choose to use \textit{bert-base-indonesian-522M} by Cahya Wirawan. Eventhough if we see at the previous experiment it just has the littlest accuracy, but this model also has the shortest training time.
+
+\end{enumerate}
+
+\begin{table}[h]
+  \centering
+  \caption{The configuration of the transformer models}
+  \label{tab: transformer_config}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Model} & \textbf{epoch} & \textbf{dropout} & \textbf{learning rates} \\ \hline
+    Roberta        & 3              & 0.2              & 2e-6                    \\ \hline
+    GPT-2          & 2              & -                & 2e-5                    \\ \hline
+    BERT           & 3              & 0.1              & 2e-5                    \\ \hline
+  \end{tabular}
+\end{table}
+
+The details of this experiment configuration for each of the transformer models can be seen at table \ref{tab: transformer_config}. There are a few difference between the configuration of the models so it can reach its optimal state. GPT-2 is using the lowest epoch values as it don't have any dropout layer on its output.
+
+\begin{table}[h]
+  \centering
+  \caption{The resulting performance of all the transformer models}
+  \label{tab: model_transformer_result}
+  \begin{tabular}{|l|l|l|l|l|p{.12\linewidth}|}
+    \hline
+    \textbf{model} & \textbf{recall} & \textbf{precision} & \textbf{f1-score} & \textbf{accuracy} & \textbf{avg. training time} \\ \hline
+    ROBERTA        & \textbf{90\%}   & 73\%               & 80\%              & 82\%              & 02:12                       \\ \hline
+    GPT-2          & 86\%            & \textbf{81\%}      & 83\%              & 83\%              & 02:15                       \\ \hline
+    BERT           & 88\%            & 80\%               & \textbf{84\%}     & \textbf{84\%}     & \textbf{02:03}              \\ \hline
+  \end{tabular}
+\end{table}
+
+Table \ref{tab: model_transformer_result} is the performance result of all the tested models. As we can see based on that table, BERT's f1-score and accuracy value has obtained the highest value compared to the rest, especially on a condition that it is pre-trained on a similar dataset with the same size.
+
+\subsection{Performance experiment based on the training approach}
+
+Aside from comparing some models that have been created previously, we also try to improve our models so it can be more optimized for our specific task compared the stock version of said model. We choose to use \textit{indobert-base-p1} model as our base model as it has attained the highest accuracy on the previous experiments if compared to other BERT models. Our approaches is described in detail below :
+
+\begin{enumerate}
+  \item parameter freeze
+
+        Parameter freeze is a technique in machine learning study when we don't want to change any of the pre-set weight that has already attained at pre-training phase. In this experiment, we tried to freeze all of the BERT parameters while still allowing the classifier weight to change accordingly.
+
+  \item parameter dropout
+
+        Dropout is a parameter that is being used by the optimizer algorithm as a way to determine how much weight values that is already calculated during the training process to be deleted per epoch. While this practice seems counter-intuitive at first, but shedding some weight values during the training phase will help the model to be more general and not being affected by the change in input. This dropout parameter will also prevent the model from overfitting.
+
+\end{enumerate}
+
+\begin{table}[h]
+  \centering
+  \caption{The configuration of the model on the training approach experiment}
+  \label{tab: training_config}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Model}   & \textbf{epoch} & \textbf{dropout} & \textbf{learning rates} \\ \hline
+    baseline         & 3              & 0.1              & 2e-5                    \\ \hline
+    parameter freeze & 50             & 0.1              & 2e-5                    \\ \hline
+    dropout          & 3              & 0.2              & 2e-5                    \\ \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \caption{The performance of the model on the training approach experiment}
+  \label{tab: model_training_result}
+  \begin{tabular}{|p{.12\linewidth}|l|l|l|l|p{.12\linewidth}|}
+    \hline
+    \textbf{model}   & \textbf{recall} & \textbf{precision} & \textbf{f1-score} & \textbf{accuracy} & \textbf{avg. training time} \\ \hline
+    baseline         & 89\%            & \textbf{90\%}      & \textbf{89\%}     & \textbf{89\%}     & 02:05                       \\ \hline
+    parameter freeze & \textbf{90\%}   & 73\%               & 81\%              & 82\%              & \textbf{00:44}              \\ \hline
+    dropout          & 83\%            & 88\%               & 85\%              & 84\%              & 03:44                       \\ \hline
+  \end{tabular}
+\end{table}
+
+Table
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width= 0.9\linewidth]{gambar/loss_concat_awal.png}
+    \caption{Nilai \textit{loss} Acuan}
+    \label{fig: loss_baseline}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width= 0.9\linewidth]{gambar/loss_freeze_50.png}
+    \caption{Nilai \textit{loss} saat melakukan \textit{training} dengan parameter \textit{freeze}}
+    \label{fig: loss_freeze}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width= 0.9\linewidth]{gambar/loss_dropout_new.png}
+    \caption{nilai \textit{loss} saat melakukan \textit{training} dengan merubah \textit{dropout}}
+    \label{fig: loss_dropout}
+  \end{center}
+\end{figure}
