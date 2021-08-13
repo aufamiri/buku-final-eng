@@ -220,6 +220,8 @@ Aside from comparing some models that have been created previously, we also try 
   \end{tabular}
 \end{table}
 
+Table \ref{tab: training_config} contains the parameters that is being used in this experiment. For the parameter freeze experiment, we configured the epoch value to be as high as 50 because even then, the loss value has not reached its overfitting state and is not yet to be in its optimal condition. But, at that point, the loss value is already reaching the state of diminishing of return, henceforth, we decided to stop the experiment at the epoch value of 50.
+
 \begin{table}[h]
   \centering
   \caption{The performance of the model on the training approach experiment}
@@ -233,12 +235,10 @@ Aside from comparing some models that have been created previously, we also try 
   \end{tabular}
 \end{table}
 
-Table
-
 \begin{figure}[h]
   \begin{center}
     \includegraphics[width= 0.9\linewidth]{gambar/loss_concat_awal.png}
-    \caption{Nilai \textit{loss} Acuan}
+    \caption{Baseline loss value}
     \label{fig: loss_baseline}
   \end{center}
 \end{figure}
@@ -246,7 +246,7 @@ Table
 \begin{figure}[h]
   \begin{center}
     \includegraphics[width= 0.9\linewidth]{gambar/loss_freeze_50.png}
-    \caption{Nilai \textit{loss} saat melakukan \textit{training} dengan parameter \textit{freeze}}
+    \caption{Loss value with parameter freeze}
     \label{fig: loss_freeze}
   \end{center}
 \end{figure}
@@ -254,7 +254,9 @@ Table
 \begin{figure}[h]
   \begin{center}
     \includegraphics[width= 0.9\linewidth]{gambar/loss_dropout_new.png}
-    \caption{nilai \textit{loss} saat melakukan \textit{training} dengan merubah \textit{dropout}}
+    \caption{Loss value with parameter dropout}
     \label{fig: loss_dropout}
   \end{center}
 \end{figure}
+
+According to the table \ref{tab: model_training_result}, we can safely assume that when we experiment with the parameter freeze approach, the average training time per epoch is way shorter compared to the baseline. This is most likely because the optimizer did not need to re-count all of the BERT layer's weight every epoch hence reducing the computational needs and in turn, make the training phase faster. Next, if we are comparing the loss graphic of the baseline model at figure \ref{fig: loss_baseline}, with the loss graphic of the parameter dropout approach experiment at figure \ref{fig: loss_dropout}, it can be said that the baseline graphic and by extension the model, has showing signs of overfitting, while on another side, the loss graphic looks nice with no signs of overfitting at all and all of these is achievable with a little drop in the model accuracy.
