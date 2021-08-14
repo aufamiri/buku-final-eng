@@ -1,6 +1,6 @@
 % Ubah judul dan label berikut sesuai dengan yang diinginkan.
-\section{Conclusion}
-\label{sec:conclusion}
+\section{Conclusions and Improvements}
+\label{sec:conclusionandimprovements}
 
 % Ubah paragraf-paragraf pada bagian ini sesuai dengan yang diinginkan.
 From the entire experiment, there are a few things in which it can be concluded with has been listed below :
@@ -10,7 +10,22 @@ From the entire experiment, there are a few things in which it can be concluded 
 
     \item Best truncating method in our approach is by truncating only the first few sentences of an entire news. This approach has successfully obtained the highest accuracy with the the gap of 3\% on nearly all metrics if compared to other truncation approach. This is most likely because more often than not, the Indonesian news site is started with a lead or a shorter and denser news content written in a single paragraph, and by taking the starting part of the news text, the lead has been included into the processed text as well.
 
-    \item
+    \item The usage of the BERT model that specifically support Indonesian langauge generally has better accuracy with the difference around 10\% on precision metric if compared to the multilingual version of the BERT model and the Malay version of the BERT model especially for Indonesian hoax detection.
+
+    \item Eventhough there are lots of other models that is based on the original BERT model itself, but the original BERT model is still good enough for task that is classifying text. This can be seen on our experiment where BERT has a better accuracy value with around 1\% gap between BERT and other transformer model. In addition, BERT has the shortest average training time per epoch with around 2 minute, 3 seconds.
+
+    \item Because of the complexity, BERT is susceptible to overfititng state, thus, configuring parameter with method such as dropout and parameter freeze can be an immense help to create more robust model while sacrificing very little amount of accuracy of only 5 - 6\%.
+
 \end{enumerate}
 
-\lipsum[21-23]
+As no creation of human being is perfect in which this experiment can not escape from, there are a few things that can be improved in this experiment that can be used as a basis for subsequent experiment which should help on improving said experiment results. These improvement is listed in detail as below :
+
+\begin{enumerate}
+    \item Eventhough we have increased the amount of dataset in this experiment, the size is still pale in comparison with its English language counterpart. The larger the dataset pool is, the higher the accuracy should be.
+
+    \item One of the major drawbacks in BERT method is the limitation of the token that it can be procesed at once which is only 512 token. There is already another advancement in the NLP field which based on the BERT architecture that remove this limitation completely.
+
+    \item What this experiment created is ultimately, only a model that can't be used yet by the people. It would be the best if there is a system that leveraging this experiment result so people can easily use it.
+
+\end{enumerate}
+
