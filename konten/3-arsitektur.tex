@@ -3,7 +3,7 @@
 \label{sec:designandimplementation}
 
 % Ubah paragraf-paragraf pada bagian ini sesuai dengan yang diinginkan.
-This research is explaining about the implementation one of the branch of deep learning studies with the aim to automatically detect Indonesian hoax news by leveraging BERT method. This detection method is trained by using a combination of dataset from \url{https://data.mendeley.com/datasets/p3hfgr5j3m/1} and dataset that we made ourself for this paper alone by using web crawling technology. Picture \ref{fig:metodologi} is the outline of this research in a nutshell.
+This research is explaining about the implementation of one of the branch of deep learning studies with the aim to automatically detect Indonesian hoax news by leveraging BERT method. This detection method is trained by using a combination of dataset from \url{https://data.mendeley.com/datasets/p3hfgr5j3m/1} and dataset that we made ourself for this paper alone by using web crawling technology. Picture \ref{fig:metodologi} is the outline of this research in a nutshell.
 
 \begin{figure} [h!]
     \centering
@@ -72,7 +72,7 @@ Because the dataset that we get from \url{https://data.mendeley.com/datasets/p3h
     \label{fig:webcrawl_method}
 \end{figure}
 
-Picture \ref{fig:webcrawl_method} is the outline flow of the webcrawling program. Starting with inputting raw HTML code into the program, changing said code into an easier-to-process objects, get the news teks and do some post-cleaning on the text, lastly, create a .CSV file to store all of the obtained news text with the appropriate format.
+Picture \ref{fig:webcrawl_method} is the outline flow of the webcrawling program. Starting with inputting raw HTML code into the program, changing said code into an easier-to-process objects, get the news text and do some post-cleaning on the text, lastly, create a .CSV file to store all of the obtained news text with the appropriate format.
 
 \begin{lstlisting}[
     language=HTML, 
@@ -99,9 +99,9 @@ s:parallaxindetail--><div class="clearfix"></div><style>
 
 Firstly, we need to determine tag or class of the HTML code for our first filter. If we look into listing \ref{lst:source_detik} as a reference, we can see \texttt{detail\_\_body\-text} class is the one that containing our desired news text. We filtered that class by inputting the class name into the appropriate parameter.
 
-More often than not, our filtering result will contain some garbage or unrelated teks resulting in the need to refine it further by post-clean it after the filter process. Usually, those teks is writer or editorial notes, ad, or related news links which we don't need at all.
+More often than not, our filtering result will contain some garbage or unrelated text resulting in the need to refine it further by post-clean it after the filter process. Usually, those text is writer or editorial notes, ad, or related news links which we don't need at all.
 
-Finally, is outputting all of the acquired news teks as a .CSV. There are no particular reason on the article of why we chose CSV format compared to other famous format unless CSV format is easier to use in our training program and because it is an open format that can be open by nearly any spreadsheet program.
+Finally, the last step is outputting all of the acquired news text as a .CSV file. There are no particular reason on the article of why we chose CSV file format compared to other famous file format aside from the CSV file format is easier to use in our training program and because it is an open-format that can be opened and edited if need be, by nearly any spreadsheet program.
 
 As the general interface and improving user experience for our webcrawling software, we use a .json format file to configure what news sources that we want to get, how much is it, and when is it. All of those configuration will be processed by the program and the program will take the news in accordance with said configuration.
 
@@ -126,7 +126,7 @@ Other than that, we will also divide the dataset into 3 portionss with details s
 \begin{enumerate}
     \item Training
 
-          This set is used with BERT as an inputted when it is in its training phase so we can get an optimized model for our task.
+          This set is used with BERT as an input when it is in its training phase so we can get an optimized model for our task.
 
     \item Validation
 
@@ -184,7 +184,7 @@ At this stage, the raw text that will be inputted into BERT has already going th
 
 Not all of the output of the BERT is being used in this particular research, we only need the content of the \texttt{[CLS]} token that is filled with the pooled output of all the other tokens and layers. The content of the \texttt{[CLS]} token is then inputted into Linear Regresson method. This method is choosen as it is easy enough while still retain quite good accuracy. Figure \ref{fig: metodologi_training} is the training method in a nutshell.
 
-There are also some parameters that we can adjust only in this stage, namely batch, learning rate, and epoch. Batch is a parameter to adjust how much data is being processed at once per iteration, mind you that there are usually a few iteration per epoch, by adjusting the batch values, the higher it is, the faster the training process is but at the cost of the memory usage. Thanks to BERT method having quite a large number of layers (718 layers, in general) it can be considered quite heavy, hence we are set the batch value at 10.
+There are also some parameters that we can adjust only in this stage, namely batch, learning rate, and epoch. Batch is a parameter to adjust how much data is being processed at once per iteration, mind you that there are usually a few iteration per epoch. By adjusting the batch values, the higher it is, the faster the training process is but at the cost of the memory usage. Thanks to BERT method having quite a large number of layers (718 layers, in general) it can be considered quite heavy, hence we are set the batch value at 10.
 
 Epoch is how much training and validation will take place before the training phase is considered as final. This parameter is one of the most important parameters to adjust as it has a direct effect on the accuracy and the loss of our model. If our loss is too high but the accuracy is too low, it is a clear indication that our model is suffering from underfitting state, meanwhile, if our loss is too low while the accuracy is too high we still need to check if our model is actually good or if it is suffering from overfitting. As our goals in this research is only to process text that is considered to be easier compared to processing image or video, we only set the epoch value to 10.
 
@@ -194,7 +194,7 @@ The validation process is used as a way to get the loss validation value that we
 
 \subsection{Testing}
 
-After going through validation and training phase, lastly, we need to test our newly created model. Based on the result of this process, we should be able to conclude whether our model can be considered good enough for our use case, or still can be further adjusted by reconfigure some of the parameters back at the training phase.
+After going through validation and training phase, lastly, we need to test our newly created model. Based on the result of this process, we should be able to conclude whether our model can be considered good enough for our use case, or still can be further adjusted by reconfiguring some of the parameters back at the training phase.
 
 \subsection{Performance Analysis}
 
