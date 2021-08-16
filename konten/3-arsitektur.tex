@@ -7,7 +7,7 @@ This research is explaining about the implementation of one of the branch of dee
 
 \begin{figure} [h!]
     \centering
-    \includegraphics[width=0.3\columnwidth]{gambar/metodologi_vertical.png}
+    \includegraphics[width=0.3\columnwidth]{gambar/Metodologi_Vertical_en.png}
     \caption{This research method in a nutshell.}
     \label{fig:metodologi}
 \end{figure}
@@ -67,7 +67,7 @@ Because the dataset that we get from \url{https://data.mendeley.com/datasets/p3h
 
 \begin{figure} [h!]
     \centering
-    \includegraphics[width=0.35\linewidth]{gambar/webcrawl_long.png}
+    \includegraphics[width=0.35\linewidth]{gambar/webcrawl method_long_en.png}
     \caption{Garis besar alur program \textit{web crawl}.}
     \label{fig:webcrawl_method}
 \end{figure}
@@ -101,7 +101,7 @@ Firstly, we need to determine tag or class of the HTML code for our first filter
 
 More often than not, our filtering result will contain some garbage or unrelated text resulting in the need to refine it further by post-clean it after the filter process. Usually, those text is writer or editorial notes, ad, or related news links which we don't need at all.
 
-Finally, the last step is outputting all of the acquired news text as a .CSV file. There are no particular reason on the article of why we chose CSV file format compared to other famous file format aside from the CSV file format is easier to use in our training program and because it is an open-format that can be opened and edited if need be, by nearly any spreadsheet program.
+Finally, the last step is outputting all of the acquired news text as a .CSV file. There are no particular reason on the article of why we chose CSV file format compared to other famous Copy of file format aside from the CSV file format is easier to use in our training program and because it is an open-format that can be opened and edited if need be, by nearly any spreadsheet program.
 
 As the general interface and improving user experience for our webcrawling software, we use a .json format file to configure what news sources that we want to get, how much is it, and when is it. All of those configuration will be processed by the program and the program will take the news in accordance with said configuration.
 
@@ -109,7 +109,7 @@ As the general interface and improving user experience for our webcrawling softw
 
 \begin{figure}[h!]
     \begin{center}
-        \includegraphics[width= .7\linewidth]{gambar/preprocess_long.png}
+        \includegraphics[width= .7\linewidth]{gambar/preprocess_long_en.png}
         \caption{Preprocessing Method}
         \label{fig: metodologi_preprocessing}
     \end{center}
@@ -184,7 +184,7 @@ At this stage, the raw text that will be inputted into BERT has already going th
 
 Not all of the output of the BERT is being used in this particular research, we only need the content of the \texttt{[CLS]} token that is filled with the pooled output of all the other tokens and layers. The content of the \texttt{[CLS]} token is then inputted into Linear Regresson method. This method is choosen as it is easy enough while still retain quite good accuracy. Figure \ref{fig: metodologi_training} is the training method in a nutshell.
 
-There are also some parameters that we can adjust only in this stage, namely batch, learning rate, and epoch. Batch is a parameter to adjust how much data is being processed at once per iteration, mind you that there are usually a few iteration per epoch. By adjusting the batch values, the higher it is, the faster the training process is but at the cost of the memory usage. Thanks to BERT method having quite a large number of layers (718 layers, in general) it can be considered quite heavy, hence we are set the batch value at 10.
+There are also some parameters that we can adjust only in this stage, namely batch, learning rate, and epoch. Batch is a parameter to adjust how much data is being processed at once per iteration, mind you that there are usually a few iteration per epoch. By adjusting the batch values, the higher it is, the faster the training process is but at the cost of the memory usage. Thanks> to BERT method having quite a large number of layers (718 layers, in general) it can be considered quite heavy, hence we are set the batch value at 10.
 
 Epoch is how much training and validation will take place before the training phase is considered as final. This parameter is one of the most important parameters to adjust as it has a direct effect on the accuracy and the loss of our model. If our loss is too high but the accuracy is too low, it is a clear indication that our model is suffering from underfitting state, meanwhile, if our loss is too low while the accuracy is too high we still need to check if our model is actually good or if it is suffering from overfitting. As our goals in this research is only to process text that is considered to be easier compared to processing image or video, we only set the epoch value to 10.
 
